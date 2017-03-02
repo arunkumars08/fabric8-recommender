@@ -5,8 +5,13 @@ import { StackComponents } from './stack-components.component';
 import { TableFilter } from './table-filter.pipe';
 import { TableOrderByPipe } from './table-orderby.pipe';
 
+import { ChartsModule } from '../common/charts/charts.module';
+
 @NgModule({
-    imports: [CommonModule],
+    imports: [
+        CommonModule,
+        ChartsModule
+    ],
     declarations: [
         StackComponents,
         TableFilter,
@@ -15,7 +20,8 @@ import { TableOrderByPipe } from './table-orderby.pipe';
     exports: [
         StackComponents,
         TableFilter,
-        TableOrderByPipe
+        TableOrderByPipe,
+        ChartsModule
     ]
 })
 

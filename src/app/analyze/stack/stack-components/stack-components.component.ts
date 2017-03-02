@@ -29,6 +29,32 @@ export class StackComponents implements OnChanges, OnInit {
     private angleDown: string = 'fa-angle-down';
     private sortDirectionClass: string = this.angleDown;
 
+    private data: any = {
+        columns: [
+            ['x', ''],
+            ['value', 130]
+        ],
+        type: 'bar'
+    };
+    private options: any = {
+        bar: {
+            width: {
+                ratio: 0.5
+            }
+        }
+    };
+    private config: any = {
+        axis: {
+            rotated: true,
+            x: {
+                type: 'category'
+            }
+        },
+        legend: {
+            show: false
+        }
+    };
+
     constructor() {
         this.fieldName = 'name';
         this.fieldValue = '';
@@ -73,6 +99,10 @@ export class StackComponents implements OnChanges, OnInit {
         }
     }
 
+   trackByFunction(index, item) {
+        return item ? item.id : undefined;
+    }
+
     private handleDependencies(dependencies: Array<any>): void {
         if (this.dependencies) {
             let length: number = this.dependencies.length;
@@ -113,13 +143,47 @@ export class StackComponents implements OnChanges, OnInit {
                 dependency[this.keys['latestVersion']] = eachOne['latest_version'] || 'NA';
                 dependency[this.keys['dateAdded']] = eachOne['dateAdded'] || 'NA';
                 dependency[this.keys['publicPopularity']] =
-                  eachOne['github_details'] ? eachOne['github_details'].stargazers_count : 'NA';
+                  this.getChartConfig(eachOne['github_details'] ? eachOne['github_details'].stargazers_count : 'NA');
                 dependency[this.keys['enterpriseUsage']] = eachOne['enterpriseUsage'] || 'NA';
                 dependency[this.keys['teamUsage']] = eachOne['teamUsage'] || 'NA';
 
                 this.dependenciesList.push(dependency);
             }
         }
+    }
+
+    private getChartConfig(value: any): any {
+        let data: any = {
+            columns: [
+                ['x', ''],
+                ['value', 130]
+            ],
+            type: 'bar'
+        };
+        let options: any = {
+            bar: {
+                width: {
+                    ratio: 0.5
+                }
+            }
+        };
+        let config: any = {
+            axis: {
+                rotated: true,
+                x: {
+                    type: 'category'
+                }
+            },
+            legend: {
+                show: false
+            }
+        };
+
+        return {
+            data: data,
+            options: options,
+            config: config
+        };
     }
 
     private handleKeyUpEvent(event: Event): void {

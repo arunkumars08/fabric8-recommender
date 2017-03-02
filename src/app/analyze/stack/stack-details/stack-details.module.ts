@@ -21,7 +21,9 @@ import { OverviewModule } from '../overview/overview.module';
             StackComponentsModule,
             OverviewModule,
             StackRecommendationModule],
-  declarations: [ StackDetailsComponent ],
+  declarations: [
+    StackDetailsComponent
+  ],
   exports: [ StackDetailsComponent ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

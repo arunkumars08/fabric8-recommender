@@ -2,17 +2,19 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { OverviewComponent } from './overview.component';
-import { ChartComponent } from './chart-component';
+import { ChartsModule } from '../common/charts/charts.module';
 
 @NgModule({
-    imports: [CommonModule],
+    imports: [
+        CommonModule,
+        ChartsModule
+    ],
     declarations: [
-        OverviewComponent,
-        ChartComponent
+        OverviewComponent
     ],
     exports: [
         OverviewComponent,
-        ChartComponent
+        ChartsModule
     ]
 })
 export class OverviewModule {}
