@@ -23,7 +23,7 @@ export class RecommenderListApi {
     let options = new RequestOptions({ headers: this.headers });
     let body = JSON.stringify(recommendationListData);
     console.log(body);
-    return this.http.post(this.url, body, options)
+    return this.http.post('http://10.70.49.144:32000/api/v1/user-feedback/', body, options)
       .map(this.extractData)
       .catch(this.handleError);
   }

@@ -1,6 +1,7 @@
 import { Component, Input, OnChanges } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { GlobalConstants } from '../constants/constants.service';
+import { Contexts } from 'ngx-fabric8-wit';
 import { AddWorkFlowService } from '../stack-details/add-work-flow.service';
 import { RecommenderListApi } from './recommender-list.service';
 
@@ -10,7 +11,8 @@ import { RecommenderListApi } from './recommender-list.service';
     styleUrls: ['./recommender.component.scss'],
     providers: [
         AddWorkFlowService,
-        RecommenderListApi
+        RecommenderListApi,
+        Contexts
     ]
 })
 /**
@@ -58,21 +60,35 @@ import { RecommenderListApi } from './recommender-list.service';
 export class RecommenderComponent implements OnChanges {
 
     @Input() recommendations;
+    @Input() stackInfo;
+    @Input() stackAnalysisData;
+
     public messages: any;
     private recommendationsList: Array<any> = [];
     private newRecommendations: Array<any> = [];
     private isSelectAll: boolean = false;
+
+    private userInfo: any = {};
 
     private recommendationHeaderActions: Array<any> = [];
 
     constructor(
         private addWorkFlowService: AddWorkFlowService,
         private recommendationListApi: RecommenderListApi,
-        private constants: GlobalConstants
+        private constants: GlobalConstants,
+        private context: Contexts
     ) {
         this.constants.getMessages('stackRecommender').subscribe((message) => {
             this.messages = message;
         });
+
+        this.userInfo['name'] = 'USername';
+        this.userInfo['space'] = 'Space';
+
+        /*this.context.current.subscribe(info => {
+            this.userInfo['name'] = info.user.attributes.username;
+            this.userInfo['space'] = info.space.attributes.name;
+        });*/
     }
 
     ngOnChanges() {
@@ -260,41 +276,64 @@ export class RecommenderComponent implements OnChanges {
                 console.log(baseUrl);
             }
         });
-        this.callRecommendationListApi();
+        this.callRecommendationListApi(workItems);
     }
 
     private getRecommendationListApiRequestPayload(): any {
         return {
-            "request_id": "12345",
+            "request_id": this.stackInfo.uuid,
             "action_type": "add",
             "component": {
-                "ecosystem": "maven|npm",
-                "name": "original package name",
-                "version": "original package version"
+                "ecosystem": '',
+                "name": "",
+                "version": ""
             },
             "recommendation": {
-                "ecosystem": "maven|npm",
-                "name": "recommended package name",
-                "version": "recommended package version"
+                "ecosystem": "",
+                "name": "",
+                "version": ""
             },
             "user_info": {
                 "user_type": "logged in",
-                "name": "asrisail",
+                "name": this.userInfo['name'],
                 "company": "company name",
                 "team": "team name",
                 "role": "user's role in team",
-                "space": "fabric8 space name",
-                "project_repo": "github or gitlab repo",
+                "space": this.userInfo['space'],
+                "project_repo": "",
                 "host ip": "",
                 "cookie": ""
             }
         };
     }
 
-    private callRecommendationListApi(): void {
+    private callRecommendationListApi(workItems: Array<any>): void {
         let data: any = this.getRecommendationListApiRequestPayload();
-        this.recommendationListApi.recommendationList(data).subscribe(result => {
-            console.log(result);
+        let result: any = this.stackAnalysisData.result[0];
+        let components: Array<any> = result.components;
+        let recommendations: any = this.stackAnalysisData.recommendation.recommendations;
+        let component: number = 0;
+        let recommendation: number = 0;
+
+        data.component.ecosystem = result.ecosystem;
+        data.recommendation.ecosystem = result.ecosystem;
+
+        let keys: Array<string> = Object.keys(workItems[0].recoObj);
+
+        if (workItems[0].title !== 'Add') {
+            let length: number = components.length;
+            for (let i: number = 0; i < length; ++ i) {
+                if (components[i].name === keys[0]) {
+                    data.components.name = keys[0];
+                    data.components.version = components[i].version;
+                }
+            }
+        }
+        data.recommendation.name = keys[0];
+        data.recommendation.version = workItems[0].recoObj[keys[0]];
+
+        this.recommendationListApi.recommendationList(data).subscribe(r => {
+            console.log(r);
         });
     }
 
@@ -311,7 +350,8 @@ export class RecommenderComponent implements OnChanges {
                     let item: any = {
                         title: recommendations[i]['action'],
                         description: recommendations[i]['message'],
-                        codebase: recommendations[i]['codebase']
+                        codebase: recommendations[i]['codebase'],
+                        recoObj: recommendations[i]['recommendationObject']
                     };
                     workItems.push(item);
                 }

@@ -66,6 +66,8 @@ export class StackDetailsComponent implements OnInit {
   workItemData: any = {};
   multilpeActionData: any = {};
 
+  public stackAnData: Array<any> = [];
+
   private recommendations: Array<any> = [];
   private dependencies: Array<any> = [];
   private stackOverviewData: any = {};
@@ -130,7 +132,8 @@ export class StackDetailsComponent implements OnInit {
             'filename': 'package.json',
             'linenumber': 1
           },
-          pop: this.getRecommendationActions()
+          pop: this.getRecommendationActions(),
+          recommendationObject: missing[i]
         });
       }
     }
@@ -148,7 +151,8 @@ export class StackDetailsComponent implements OnInit {
             'filename': 'package.json',
             'linenumber': 1
           },
-          pop: this.getRecommendationActions()
+          pop: this.getRecommendationActions(),
+          recommendationObject: version[i]
         });
       }
     }
@@ -196,6 +200,7 @@ export class StackDetailsComponent implements OnInit {
         // Enter the actual scene only if the data is valid and the data has something inside.
         if (data && Object.keys(data).length !== 0) {
           stackAnalysesData = data;
+          this.stackAnData = data;
           let result: any;
           let components: Array<any> = [];
 
