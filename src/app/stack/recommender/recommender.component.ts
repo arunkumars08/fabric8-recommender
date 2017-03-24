@@ -2,12 +2,16 @@ import { Component, Input, OnChanges } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { GlobalConstants } from '../constants/constants.service';
 import { AddWorkFlowService } from '../stack-details/add-work-flow.service';
+import { RecommenderListApi } from './recommender-list.service';
 
 @Component({
     selector: 'f8-recommender',
     templateUrl: './recommender.component.html',
     styleUrls: ['./recommender.component.scss'],
-    providers: [AddWorkFlowService]
+    providers: [
+        AddWorkFlowService,
+        RecommenderListApi
+    ]
 })
 /**
  * RecommenderComponent
@@ -63,6 +67,7 @@ export class RecommenderComponent implements OnChanges {
 
     constructor(
         private addWorkFlowService: AddWorkFlowService,
+        private recommendationListApi: RecommenderListApi,
         private constants: GlobalConstants
     ) {
         this.constants.getMessages('stackRecommender').subscribe((message) => {
@@ -254,6 +259,42 @@ export class RecommenderComponent implements OnChanges {
                 let baseUrl: string = 'http://demo.almighty.io/work-item/list/detail/' + data.data.id;
                 console.log(baseUrl);
             }
+        });
+        this.callRecommendationListApi();
+    }
+
+    private getRecommendationListApiRequestPayload(): any {
+        return {
+            "request_id": "12345",
+            "action_type": "add",
+            "component": {
+                "ecosystem": "maven|npm",
+                "name": "original package name",
+                "version": "original package version"
+            },
+            "recommendation": {
+                "ecosystem": "maven|npm",
+                "name": "recommended package name",
+                "version": "recommended package version"
+            },
+            "user_info": {
+                "user_type": "logged in",
+                "name": "asrisail",
+                "company": "company name",
+                "team": "team name",
+                "role": "user's role in team",
+                "space": "fabric8 space name",
+                "project_repo": "github or gitlab repo",
+                "host ip": "",
+                "cookie": ""
+            }
+        };
+    }
+
+    private callRecommendationListApi(): void {
+        let data: any = this.getRecommendationListApiRequestPayload();
+        this.recommendationListApi.recommendationList(data).subscribe(result => {
+            console.log(result);
         });
     }
 
