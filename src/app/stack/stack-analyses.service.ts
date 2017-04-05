@@ -1,9 +1,11 @@
-import { Injectable } from '@angular/core';
+import { Injectable, Inject } from '@angular/core';
 import { Http, Response } from '@angular/http';
 
 import { Observable } from 'rxjs/Observable';
 import 'rxjs/add/operator/catch';
 import 'rxjs/add/operator/map';
+
+import { WIT_API_URL } from 'ngx-fabric8-wit';
 
 @Injectable()
 export class StackAnalysesService {
@@ -12,8 +14,18 @@ export class StackAnalysesService {
 
   constructor(
     private http: Http,
+    @Inject(WIT_API_URL) apiUrl: string,
   ) {
     this.stackAnalysesUrl = 'http://recommender.api.prod-preview.openshift.io/api/v1/';
+    if(apiUrl) {
+      this.stackAnalysesUrl = apiUrl.replace('//', '//recommender.');
+      let len: number = this.stackAnalysesUrl.length;
+      if(this.stackAnalysesUrl[len - 1] !== '/') {
+        this.stackAnalysesUrl += '/';
+      }
+      this.stackAnalysesUrl += 'v1/';
+    }
+
   }
 
   getStackAnalyses(id: string): Observable<any> {
