@@ -57,8 +57,10 @@ import { AddWorkFlowService } from '../stack-details/add-work-flow.service';
 export class RecommenderComponent implements OnChanges {
 
     @Input() recommendations;
+    @Input() specificNoRecommendationsTrack;
     public messages: any;
     public workItemResponse: Array<any> = [];
+    public noRecommendationsSupportingMessage: string = '';
     private recommendationsList: Array<any> = [];
     private newRecommendations: Array<any> = [];
     private isSelectAll: boolean = false;
@@ -117,6 +119,14 @@ export class RecommenderComponent implements OnChanges {
                 recommendation['showCreateButton'] = true;
                 recommendation['showViewButton'] = false;
                 this.recommendationsList.push(recommendation);
+            }
+
+            if (this.recommendationsList.length === 0) {
+                if (this.specificNoRecommendationsTrack) {
+                    this.noRecommendationsSupportingMessage = 'Below is some general information about it.';
+                } else {
+                    this.noRecommendationsSupportingMessage = 'Your stack looks great and below is some general information about it.';
+                }
             }
         }
     }

@@ -9,7 +9,7 @@
     <div class="no-recommendations" *ngIf="recommendationsList.length === 0">
       <div class="alert alert-info">
         <span class="pficon pficon-info"></span>
-        <strong>{{messages && messages.no_recommendations_text}}</strong> &nbsp; {{messages && messages.no_recommendations_suggestion}}
+        <strong>{{messages && messages.no_recommendations_text}}</strong> &nbsp; {{noRecommendationsSupportingMessage && noRecommendationsSupportingMessage}}
       </div>
     </div>
     <!-- No recommendations scenario -->

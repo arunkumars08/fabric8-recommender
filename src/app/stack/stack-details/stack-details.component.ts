@@ -49,8 +49,10 @@ import {getStackRecommendations, getResultInformation} from '../utils/stack-api-
  */
 export class StackDetailsComponent implements OnInit {
   @Input() stack;
+  @Input() displayName;
   @ViewChild('stackModule') modalStackModule: any;
   public messages: any;
+  public specificNoRecommendationsTrack: boolean = false;
 
   errorMessage: any = {};
   stackAnalysesData: Array<any> = [];
@@ -90,6 +92,7 @@ export class StackDetailsComponent implements OnInit {
     if (this.stack) {
       this.setBuildId();
     }
+    this.displayName = this.displayName || 'Stack Reports';
   }
 
   public showStackModal(event: Event): void {
@@ -284,6 +287,10 @@ export class StackDetailsComponent implements OnInit {
                 this.setRecommendations(recommendations);
               }
             });
+          } else {
+            // If both missing pacakges and version mismatches are not present,
+            // then handle the 2nd No Recommendation flow
+            this.specificNoRecommendationsTrack = true;
           }
           // Ends Recommendations
 

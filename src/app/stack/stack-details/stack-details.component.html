@@ -1,6 +1,6 @@
 <div class="container stack-details">
   <div class="row">
-    <a class="stack-reports-btn" (click)="showStackModal($event)">{{messages && messages.title}}</a>
+    <a class="stack-reports-btn" (click)="showStackModal($event)">{{displayName}}</a>
     <modal #stackModule title="Report title on Application, Build #{{buildId}}" modalClass="modal-lg modal-fullscreen" (onOpen)="getStackAnalyses(stack);">
       <modal-header>
           {{modalHeader}}
@@ -12,7 +12,7 @@
           <div [hidden]="errorMessage.message">
             <!-- Recommender -->
             <div>
-              <f8-recommender [recommendations]="recommendations"></f8-recommender>
+              <f8-recommender [recommendations]="recommendations" [specificNoRecommendationsTrack]="specificNoRecommendationsTrack"></f8-recommender>
             </div>
             <!-- Stack Overview -->
             <div>
