@@ -439,6 +439,7 @@ export class StackDetailsComponent implements OnInit {
     this.user = recommendations['user_stack_dependencies'];
 
     this.previewData = this.companion[0];
+    this.previewData.isCurrent = true;
 
     console.log('Companion');
     console.log(this.companion);
