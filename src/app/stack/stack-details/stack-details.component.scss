@@ -66,3 +66,27 @@
         }
     }
 }
+
+.stack-section {
+    font-size: 15px;
+    div {
+      padding-left: 10px;  
+    }
+    .recommend-tile {
+        background: #fff;
+        font-size: 15px;
+        padding: 2px 0;
+        margin-bottom: 2px;
+
+        &.active {
+            background: #555;
+            color: #ededed;
+        }
+        &:after {
+            content: '';
+            clear: both;
+            float: none;
+            display: block;
+        }
+    }
+}

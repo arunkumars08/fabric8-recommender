@@ -31,7 +31,7 @@
                 <recommendations (onRecommendationSelect)="handleSelectedRecommendation($event)" [recommendations]="user"></recommendations>
               </div>
               <!-- Stack level information -->
-              <div class="recommendation-type companion-section">
+              <div class="recommendation-type companion-section stack-section">
                 <h3 class="recommendation-title">Recommendations: Your application stack</h3>
                 <div><i class="pficon pficon-virtual-machine"></i><span style="margin-left: 10px;">{{stackLevelInfo.ecosystem}}</span></div>
                 <div><i class="fa fa-arrow-circle-o-up"></i><span style="margin-left: 10px;">{{stackLevelInfo._release}}</span> (Latest Release)</div>
@@ -42,11 +42,17 @@
                   </div>
                   <ul *ngIf="showAnalysedDepData" class="list-group">
                     <li class="list-group-item" *ngFor="let value of stackLevelInfo.analyzed_dependents; trackBy: index;">
-                      <i class="pficon pficon-folder-close"></i><span style="margin-left: 10px;">{{value.name}}</span>
+                      <div class="recommend-tile">
+                        <div class="col-xs-4 package-used col-xs-offset-2">
+                          <i class="fa fa-folder folder-icon"></i>
+                          <span class="package-name-depend">{{value.name}}</span>
+                        </div>
+                        <div class="col-xs-4 used-stars">
+                          <i class="fa fa-tag"></i>
+                          <span class="used-star-count">{{value.version}}</span>
+                        </div>
+                      </div>
                     </li>
-                    <!--<li class="list-group-item">
-                      <i class="pficon pficon-folder-close"></i><span style="margin-left: 10px;">io.vertx.web</span>
-                    </li>-->
                   </ul>
                 </div>
                 <div>
@@ -56,11 +62,17 @@
                   </div>
                   <ul *ngIf="showDependentsData" class="list-group">
                     <li class="list-group-item" *ngFor="let value of stackLevelInfo.unknown_dependents; trackBy: index;">
-                      <i class="pficon pficon-folder-close"></i><span style="margin-left: 10px;">{{value.name}}</span>
+                      <div class="recommend-tile">
+                        <div class="col-xs-4 package-used col-xs-offset-2">
+                          <i class="fa fa-folder folder-icon"></i>
+                          <span class="package-name-depend">{{value.name}}</span>
+                        </div>
+                        <div class="col-xs-4 used-stars">
+                          <i class="fa fa-tag"></i>
+                          <span class="used-star-count">{{value.version}}</span>
+                        </div>
+                      </div>
                     </li>
-                    <!--<li class="list-group-item">
-                      <i class="pficon pficon-folder-close"></i><span style="margin-left: 10px;">io.vertx.web</span>
-                    </li>-->
                   </ul>
                 </div>
                 <div><i class="fa fa-list-alt"></i><span style="margin-left: 10px;">Licenses</span>
@@ -70,8 +82,20 @@
                     </li>
                   </ul>
                 </div>
-                <div><span>Recmmended License: </span><span><b>{{stackLevelInfo.recommended_stack_licenses}}</b></span></div>
-                <div><span>License Conflicts: </span><span [ngStyle]="{'color' : stackLevelInfo.stack_license_conflict ? 'red' : 'green'}"><b>{{stackLevelInfo.stack_license_conflict ? 'Yes' : 'NONE'}}</b></span></div>
+
+                <div *ngIf="stackLevelInfo.usage_outliers">
+                  <i class="pficon pficon-warning-triangle-o"></i>
+                  <span style="margin-left: 10px; color: orange;">Calculated Package {{stackLevelInfo.usage_outliers}} with the version
+                  is rarely used with current stack 
+                  </span>
+                </div>
+
+                <div *ngIf="stackLevelInfo.license_outliers">
+                  <i class="pficon pficon-warning-triangle-o"></i>
+                  <span style="margin-left: 10px;color: orange;">License {{stackLevelInfo.license_outliers}} which is included is conflicting with other licenses 
+                  in the stack
+                  </span>
+                </div>
               </div>
             </div>
             <div class="col-xs-12 col-md-8 preview-section">
