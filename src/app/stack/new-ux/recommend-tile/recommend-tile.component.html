@@ -1,4 +1,4 @@
-<div class="recommend-tile">
+<div [ngClass]="recommendation.isCurrent === true ? 'active' : ''" class="recommend-tile">
     <div class="col-xs-4 package-used col-xs-offset-2">
         <i class="fa fa-folder folder-icon" aria-hidden="true"></i>
         <span class="package-name-depend">{{recommendation.name}}</span>

@@ -16,7 +16,20 @@ export class RecommendationsComponent {
         }
     }
 
+    resetRecommendations(): void {
+        let tiles = document.getElementsByClassName('recommend-tile');
+        for (let elem in tiles) {
+            if (tiles.hasOwnProperty(elem)) {
+                if (tiles[elem].classList.contains('active')) {
+                    tiles[elem].classList.remove('active');
+                }
+            }
+        }
+    }
+
     handleTileClick(recommendation: any): void {
+        this.resetRecommendations();
+        recommendation.isCurrent = true;
         this.onRecommendationSelect.emit(recommendation);
     }
 }
