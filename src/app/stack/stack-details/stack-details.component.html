@@ -41,7 +41,7 @@
                     <i [ngClass]="showAnalysedDepData ? 'fa fa-angle-up' : 'fa fa-angle-down'"  style="float: right;"></i>
                   </div>
                   <ul *ngIf="showAnalysedDepData" class="list-group">
-                    <li class="list-group-item" *ngFor="let value of stackLevelInfo.analyzed_dependents; trackBy: index;">
+                    <li class="list-group-item" *ngFor="let value of stackLevelInfo.analyzed_dependencies; trackBy: index;">
                       <div class="recommend-tile">
                         <div class="col-xs-4 package-used col-xs-offset-2">
                           <i class="fa fa-folder folder-icon"></i>
@@ -81,18 +81,18 @@
                       <span style="margin-left: 10px;">{{stackLevelInfo.distinct_licenses}}</span>
                     </li>
                   </ul>
-                </div>
+                </div>  
 
-                <div *ngIf="stackLevelInfo.usage_outliers">
+                <div *ngIf="outliers.usage_outliers">
                   <i class="pficon pficon-warning-triangle-o"></i>
-                  <span style="margin-left: 10px; color: orange;">Calculated Package {{stackLevelInfo.usage_outliers}} with the version
+                  <span style="margin-left: 10px; color: orange;">Calculated Package {{outliers.usage_outliers}} with the version
                   is rarely used with current stack 
                   </span>
                 </div>
 
-                <div *ngIf="stackLevelInfo.license_outliers">
+                <div *ngIf="outliers.license_outliers">
                   <i class="pficon pficon-warning-triangle-o"></i>
-                  <span style="margin-left: 10px;color: orange;">License {{stackLevelInfo.license_outliers}} which is included is conflicting with other licenses 
+                  <span style="margin-left: 10px;color: orange;">License {{outliers.license_outliers}} which is included is conflicting with other licenses 
                   in the stack
                   </span>
                 </div>

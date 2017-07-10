@@ -61,6 +61,7 @@ export class StackDetailsComponent implements OnInit {
 
   public userStack: any = {};
   public stackLevelInfo: any = {};
+  public outliers: any = {};
 
   public previewData: any = {};
 
@@ -394,7 +395,7 @@ export class StackDetailsComponent implements OnInit {
 
   /** New Stack Analysis Implementation */
   private getStackResults(): void {
-    let url: string = 'https://gist.githubusercontent.com/arunkumars08/530483080a4162edcb57b9924a8eefd1/raw/df4d53ffec8ffe6f8151e4d01dda08e61fe46944/stack.json';
+    let url: string = 'https://gist.githubusercontent.com/arunkumars08/530483080a4162edcb57b9924a8eefd1/raw/dcd8df249853733f765fea1533505b5722f50d29/stack.json';
     let result: Observable<any> = this.stackAnalysesService.getStackResults(url);
     result.subscribe((data: any) => {
       this.handleStackResult(data);
@@ -419,9 +420,10 @@ export class StackDetailsComponent implements OnInit {
 
   }
 
-  private buildStackLevelInfo(data: any): void {
+  private buildStackLevelInfo(data: any, outliers: any): void {
     console.log(data);
     this.stackLevelInfo = data;
+    this.outliers = outliers;
   }
 
   private handleSelectedRecommendation(data: any): void {
@@ -433,10 +435,14 @@ export class StackDetailsComponent implements OnInit {
     let result = data.result[0];
     let userStack: any = result['user_stack_info'];
     let recommendations: any = result['recommendations'];
+    let outliers: any = {
+      usage_outliers: recommendations['usage_outliers'],
+      license_outliers: recommendations['license_outliers']
+    };
 
     this.companion = recommendations['companion'];
     this.alternate = recommendations['alternate'];
-    this.user = recommendations['user_stack_dependencies'];
+    this.user = userStack['dependencies'];
 
     this.previewData = this.companion[0];
     this.previewData.isCurrent = true;
@@ -448,7 +454,7 @@ export class StackDetailsComponent implements OnInit {
     this.buildAlternate(this.alternate);
     this.buildUserStack(this.user);
 
-    this.buildStackLevelInfo(userStack);
+    this.buildStackLevelInfo(userStack, outliers);
   }
 
   public toggleAnalysedDepData(event: Event): void {
