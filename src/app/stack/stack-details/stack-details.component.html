@@ -21,17 +21,17 @@
               </div>
 
               <!-- Alternate -->
-              <div class="recommendation-type companion-section">
+              <div class="recommendation-type alternate-section">
                 <h3 class="recommendation-title">Alternative components</h3>
                 <recommendations (onRecommendationSelect)="handleSelectedRecommendation($event)" [recommendations]="alternate"></recommendations>
               </div>
               <!-- User -->
-              <div class="recommendation-type companion-section">
+              <div class="recommendation-type user-section">
                 <h3 class="recommendation-title">Your application Stack</h3>
                 <recommendations (onRecommendationSelect)="handleSelectedRecommendation($event)" [recommendations]="user"></recommendations>
               </div>
               <!-- Stack level information -->
-              <div class="recommendation-type companion-section stack-section">
+              <div class="recommendation-type stack-section">
                 <h3 class="recommendation-title">Recommendations: Your application stack</h3>
                 <div><i class="pficon pficon-virtual-machine"></i><span style="margin-left: 10px;">{{stackLevelInfo.ecosystem}}</span></div>
                 <div><i class="fa fa-arrow-circle-o-up"></i><span style="margin-left: 10px;">{{stackLevelInfo._release}}</span> (Latest Release)</div>
@@ -85,7 +85,7 @@
 
                 <div *ngIf="outliers.usage_outliers">
                   <i class="pficon pficon-warning-triangle-o"></i>
-                  <span style="margin-left: 10px; color: orange;">Calculated Package {{outliers.usage_outliers}} with the version
+                  <span style="margin-left: 10px; color: orange;">Calculated Package <span class="outlier-name" *ngFor="let usage_outlier of outliers.usage_outliers">{{usage_outlier.package_name}}</span>
                   is rarely used with current stack 
                   </span>
                 </div>

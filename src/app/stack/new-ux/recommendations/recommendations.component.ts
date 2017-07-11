@@ -27,9 +27,10 @@ export class RecommendationsComponent {
         }
     }
 
-    handleTileClick(recommendation: any): void {
+    handleTileClick(event: any, recommendation: any): void {
         this.resetRecommendations();
         recommendation.isCurrent = true;
+        recommendation.showWorkItem = event.currentTarget.parentNode && event.currentTarget.parentNode.parentNode && !event.currentTarget.parentNode.parentNode.classList.contains('user-section');
         this.onRecommendationSelect.emit(recommendation);
     }
 }

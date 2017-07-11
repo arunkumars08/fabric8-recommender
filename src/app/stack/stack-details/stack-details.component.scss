@@ -72,6 +72,15 @@
     div {
       padding-left: 10px;  
     }
+    .outlier-name {
+        font-weight: bold;
+        &:after {
+            content: ', ';
+        }
+        &:last-child:after {
+            content: '';
+        }
+    }
     .recommend-tile {
         background: #fff;
         font-size: 15px;

@@ -152,7 +152,7 @@
             </div>
             <div class="version-information">
                 <i class="fa fa-tag version-icon" aria-hidden="true"></i>
-                <span class="version">{{previewData && previewData.latest_version}}</span>
+                <span class="version">{{previewData && previewData.latest_version || 'NA'}}</span>
                 <span class="support-info">(Latest Version)</span>
             </div>
         </div>
@@ -197,8 +197,9 @@
             </h3>
             <div class="content">
                 <span *ngFor="let license of previewData && previewData.licenses" class="license-pill">
-                    license
+                    {{license}}
                 </span>
+                <span *ngIf="!previewData.licenses || previewData.licenses.length === 0">NA</span>
             </div>
         </div>
     </div>
@@ -207,11 +208,14 @@
             <h3>General note:</h3>
             <div class="content">
                 <ul>
-                    <li>This package has no security vulnerability associated.</li>
+                    <li *ngIf="previewData && !previewData.security || previewData.security.length === 0">This package has no security vulnerability associated.</li>
+                    <li *ngIf="previewData && previewData.security && previewData.security.length > 0">This package has the following security vulnerabilities associated: <br />
+                        <span class="security-name" *ngFor="let security of previewData.security">{{security.CVE}}</span>
+                    </li>
                     <li>It is an active package.</li>
                 </ul>
             </div>
         </div>
     </div>
-    <button *ngIf="previewData.license_outlier === undefined" class="btn-blue" id="create-work-item">Create Work Item</button>
+    <button *ngIf="previewData && previewData.showWorkItem" class="btn-blue" id="create-work-item">Create Work Item</button>
 </div>

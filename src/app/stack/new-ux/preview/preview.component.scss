@@ -150,4 +150,13 @@
         text-align: center;
         font-size: 15px;
     }
+    .security-name {
+        font-weight: bold;
+        &:after {
+            content: ', ';
+        }
+        &:last-child:after {
+            content: '';
+        }
+    }
 }

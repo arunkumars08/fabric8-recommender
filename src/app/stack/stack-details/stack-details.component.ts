@@ -395,7 +395,7 @@ export class StackDetailsComponent implements OnInit {
 
   /** New Stack Analysis Implementation */
   private getStackResults(): void {
-    let url: string = 'https://gist.githubusercontent.com/arunkumars08/530483080a4162edcb57b9924a8eefd1/raw/dcd8df249853733f765fea1533505b5722f50d29/stack.json';
+    let url: string = 'https://gist.githubusercontent.com/arunkumars08/530483080a4162edcb57b9924a8eefd1/raw/95aa0700534140098a003d1d5a798a9c2b3778de/stack.json';
     let result: Observable<any> = this.stackAnalysesService.getStackResults(url);
     result.subscribe((data: any) => {
       this.handleStackResult(data);
@@ -443,9 +443,9 @@ export class StackDetailsComponent implements OnInit {
     this.companion = recommendations['companion'];
     this.alternate = recommendations['alternate'];
     this.user = userStack['dependencies'];
-
     this.previewData = this.companion[0];
     this.previewData.isCurrent = true;
+    this.previewData.showWorkItem = true;
 
     console.log('Companion');
     console.log(this.companion);
