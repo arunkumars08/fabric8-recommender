@@ -18,7 +18,7 @@
                                 <i class="fa fa-line-chart" aria-hidden="true"></i>
                             </div>
                             <div class="usage-metric">
-                                <h2 class="usage-metric-value">{{previewData && previewData.github && previewData.github.dependent_projects}}</h2>
+                                <h2 class="usage-metric-value">{{previewData && previewData.github && previewData.github.dependent_repos}}</h2>
                                 <div class="usage-metric-info">
                                     Github usage count
                                 </div>
@@ -104,15 +104,6 @@
                             </div>
                             <div class="count">
                                 {{previewData && previewData.github && previewData.github.contributors}}
-                            </div>
-                        </div>
-                        <div class="stat margin-right-20">
-                            <div class="desc">
-                                <i class="fa fa-file-archive-o" aria-hidden="true"></i>
-                                <span>Size</span>
-                            </div>
-                            <div class="count">
-                                {{previewData && previewData.github && previewData.github.size}}
                             </div>
                         </div>
                     </div>

@@ -97,7 +97,7 @@
 
                 <div *ngIf="outliers.license_outliers">
                   <i class="pficon pficon-warning-triangle-o"></i>
-                  <span style="margin-left: 10px;color: orange;">License {{outliers.license_outliers}} which is included is conflicting with other licenses 
+                  <span style="margin-left: 10px;color: orange;">License <span class="outlier-name" *ngFor="let license_outlier of outliers.license_outliers">{{license_outlier}}</span> which is included is conflicting with other licenses 
                   in the stack
                   </span>
                 </div>
