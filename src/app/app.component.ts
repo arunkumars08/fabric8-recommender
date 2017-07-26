@@ -7,6 +7,6 @@ import { Component } from '@angular/core';
 })
 
 export class AppComponent {
-    public stackUrl: string = 'https://recommender.api.openshift.io/api/v1/stack-analyses/2106725f66d04349b2f42fc185c04714';
+    public stackUrl: string = 'https://gist.githubusercontent.com/samuzzal-choudhury/005dd247395b09acc77a4cdffeb7e650/raw/9e832d9ba91cc5bc099d18c0bd0fd275e86dc3d5/response.json';
     // public stackUrl: string = 'http://localhost:32000/api/v1/stack-analyses/ed6fc94dbe63454093c8586e5bb811dd';
 }

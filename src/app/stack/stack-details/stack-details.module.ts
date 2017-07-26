@@ -11,15 +11,16 @@ import { RecommenderModule } from '../recommender/recommender.module';
 import { StackComponentsModule } from '../stack-components/stack-components.module';
 import { StackDetailsComponent } from './stack-details.component';
 
+/** New UX */
+import {StackLevelModule} from '../stack-level/stack-level.module';
+/** New UX */
+
 @NgModule({
   imports: [
     CommonModule,
     HttpModule,
-    ModalModule,
     FormsModule,
-    RecommenderModule,
-    StackComponentsModule,
-    OverviewModule
+    StackLevelModule
   ],
   declarations: [ StackDetailsComponent ],
   exports: [ StackDetailsComponent ],

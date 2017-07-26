@@ -43,8 +43,9 @@ export class StackAnalysesService {
   }
 
   getStackAnalyses(url: string): Observable<any> {
-    let options = new RequestOptions({ headers: this.headers });
-    return this.http.get(url, options)
+    //let options = new RequestOptions({ headers: this.headers });
+    //return this.http.get(url, options)
+    return this.http.get(url)
       .map(this.extractData)
       .catch(this.handleError);
   }
