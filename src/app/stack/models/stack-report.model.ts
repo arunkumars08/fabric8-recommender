@@ -1,84 +1,98 @@
 export class StackReportModel {
-    finishedAt: string;
-    requestId: string;
-    resultInformation: Array<ResultInformationModel>;
-    startedAt: string;
+    finished_at: string;
+    request_id: string;
+    result: Array<ResultInformationModel>;
+    started_at: string;
 }
 
 export class ResultInformationModel {
-    auditInformation: AuditInformationModel;
+    audit: AuditInformationModel;
     release: string;
-    manifestName: string;
+    manifest_name: string;
     recommendations: Array<RecommendationsModel>;
-    usageStackInfo: UserStackInfoModel;
+    user_stack_info: UserStackInfoModel;
 }
 
 export class AuditInformationModel {
-    endedAt: string;
-    startedAt: string;
+    ended_at: string;
+    started_at: string;
     version: string;
 }
 
 export class RecommendationsModel {
-    alternateComponents: Array<ComponentInformationModel>;
-    companionComponents: Array<ComponentInformationModel>;
-    usageOutliers: Array<OutlierInformationModel>;
+    alternate_components: Array<ComponentInformationModel>;
+    companion_components: Array<ComponentInformationModel>;
+    usage_outliers: Array<OutlierInformationModel>;
 }
 
 export class ComponentInformationModel {
-    codeMetrics: any; // Ignored from strict typing as this is of least importance
+    code_metrics: any; // Ignored from strict typing as this is of least importance
     ecosystem: string;
     github: GithubModel;
-    latestVersion: string;
+    latest_version: string;
     licenses: Array<string>;
     name: string;
-    osioUserCount: number;
+    osio_user_count: number;
     replaces: any;
-    security: Array<string>;
+    security: Array<any>;
     sentiment: SentimentModel;
     version: string;
 }
 
 export class GithubModel {
     contributors: number;
-    dependentProjects: number;
-    dependentRepos: number;
-    firstReleaseDate: string;
-    forksCount: number;
-    monthlyIssuesClosed: number;
-    monthlyIssuesOpened: number;
-    yearlyIssuesClosed: number;
-    yearlyIssuesOpened: number;
-    latestReleaseDuration: string;
-    monthlyPullRequestsOpen: number;
-    monthlyPullRequestsClose: number;
+    dependent_projects: number;
+    dependent_repos: number;
+    first_release_date: string;
+    forks_count: number;
+    issues: {
+        month: {
+            closed: number;
+            opened: number;
+        };
+        year: {
+            closed: number;
+            opened: number;
+        }
+    };
+    latest_release_duration: string;
+    pull_requests: {
+        month: {
+            closed: number;
+            opened: number;
+        };
+        year: {
+            closed: number;
+            opened: number;
+        }
+    };
     size: string;
-    stargazersCount: number;
-    totalReleases: number;
-    usedBy: Array<any>;
+    stargazers_count: number;
+    total_releases: number;
+    used_by: Array<any>;
     watchers: number;
 }
 
 export class SentimentModel {
-    latestComment: string;
-    overallScore: number;
+    latest_comment: string;
+    overall_score: number;
 }
 
 export class OutlierInformationModel {
-    outlierProbabilty: number;
-    packageName: string;
+    outlier_probabilty: number;
+    package_name: string;
 }
 
 export class UserStackInfoModel {
-    analyzedDependencies: Array<any>;
-    analyzedDependenciesCount: number;
+    analyzed_dependencies: Array<any>;
+    analyzed_dependencies_count: number;
     dependencies: Array<ComponentInformationModel>;
-    distinctLicenses: Array<string>;
+    distinct_licenses: Array<string>;
     ecosystem: string;
-    recommendationReady: boolean;
-    recommendedStackLicenses: Array<string>;
-    stackLicenseConflict: boolean;
-    totalLicenses: number;
-    unknownDependencies: Array<any>;
-    unknownDependenciesCount: number;
+    recommendation_ready: boolean;
+    recommended_stack_licenses: Array<string>;
+    stack_license_conflict: boolean;
+    total_licenses: number;
+    unknown_dependencies: Array<any>;
+    unknown_dependencies_count: number;
 }

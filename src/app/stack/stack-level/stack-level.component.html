@@ -1,20 +1,64 @@
 <div class="stack-level-information">
-    <h3>Stack Level Information</h3>
-    <div (click)="$event.preventDefault()">
-    <tabset>
-        <tab *ngFor="let tabz of tabs"
-            [heading]="tabz.title"
-            [active]="tabz.active"
-            (select)="tabz.active = true"
-            (deselect)="tabz.active = false"
-            [disabled]="tabz.disabled"
-            [removable]="tabz.removable"
-            (removed)="removeTabHandler(tabz)"
-            [customClass]="tabz.customClass">
-        
-            
-
-        </tab>
-    </tabset>
+    <h3>Stack level details</h3>
+    <div class="user-stack row">
+        <div class="col-xs-3 block-section security-information">
+            <div class="heading">Security</div>
+            <div class="stack-info-section">
+                <div class="col-xs-12">
+                    <div class="cvss-id">
+                        {{securityInfo.cve.CVE}}
+                        <i class="{{securityInfo.iconClass}}" 
+                        data-toggle="tooltip" data-placement="top" 
+                        title="CVSS: Score to measure the impact of security vulnerability. In a scale from 0.0-10.0, vulnerabilities less than 7.0 are considered medium impact and more than or equal to 7.0 are considered high impact ones."></i>
+                    </div>
+                    <div class="row cvss-data">
+                        <div class="col-xs-12">
+                            <span class="cvss-score">{{securityInfo.cve.CVSS}}</span>
+                            <span class="cvss-score-label"><span class="label-1">CVSS Score</span></span>
+                            <span class="cvss-indication"><b>{{securityInfo.cve.CVSS}} out of</b> 10</span>
+                        </div>
+                    </div>
+                    <div class="progress">
+                        <!--added inline style here to handle the dynamic value of cvss score for the progress bar-->
+                        <div class="progress-bar" role="progressbar"
+                        [ngStyle]="{'width': securityInfo.percentage +'%'}"
+                        [ngClass]="securityInfo.displayClass"
+                        data-toggle="tooltip" data-placement="top" 
+                        title="{{securityInfo.cve.CVSS}} out of 10">
+                        </div>
+                    </div>
+                    <div class="which-component">
+                        <!--Affected component from the stack: <b>{{securityInfo && securityInfo?.name}}</b>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-3 block-section">
+            <div class="heading">Licenses</div>
+            <div class="stack-info-section licenses-info">
+                <f8-chart [data]="licenseInfo['data']" [chartOptions]="licenseInfo['chartOptions']" [configs]="licenseInfo['configs']"></f8-chart>
+            </div>
+        </div>
+        <div class="col-xs-3 block-section">
+            <div class="heading">Components</div>
+            <div class="stack-info-section">
+                <div class="col-xs-6 component-info">
+                    <p>Unknown Components</p>
+                    <i class="unknown component-count-icon fa fa-question-circle-o" aria-hidden="true"></i>
+                    <span>{{userStack && userStack.unknown_dependencies_count}}</span>
+                </div>
+                <div class="col-xs-6 component-info">
+                    <p>Analyzed Components</p>
+                    <i class="analyzed component-count-icon fa fa-check-circle-o" aria-hidden="true"></i>
+                    <span>{{userStack && userStack.analyzed_dependencies_count}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-xs-3 block-section">
+            <div class="heading">Statistics</div>
+            <div class="stack-info-section statistics-info">
+                
+            </div>
+        </div>
     </div>
 </div>

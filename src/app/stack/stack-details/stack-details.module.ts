@@ -4,6 +4,7 @@ import { HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
 
 import { ModalModule } from 'ngx-modal';
+import {TabsModule} from 'ng2-bootstrap';
 
 import { GlobalConstants } from '../constants/constants.service';
 import { OverviewModule } from '../overview/overview.module';
@@ -20,7 +21,8 @@ import {StackLevelModule} from '../stack-level/stack-level.module';
     CommonModule,
     HttpModule,
     FormsModule,
-    StackLevelModule
+    StackLevelModule,
+    TabsModule.forRoot()
   ],
   declarations: [ StackDetailsComponent ],
   exports: [ StackDetailsComponent ],
