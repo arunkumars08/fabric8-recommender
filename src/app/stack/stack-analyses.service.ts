@@ -45,10 +45,10 @@ export class StackAnalysesService {
   }
 
   getStackAnalyses(url: string): Observable<any> {
-    //let options = new RequestOptions({ headers: this.headers });
-    //return this.http.get(url, options)
+    let options = new RequestOptions({ headers: this.headers });
     let stackReport: StackReportModel = null;
-    return this.http.get(url)
+
+    return this.http.get(url, options)
       .map(this.extractData)
       .map((data) => {
         stackReport = data;

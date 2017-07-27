@@ -9,7 +9,7 @@ export class ResultInformationModel {
     audit: AuditInformationModel;
     release: string;
     manifest_name: string;
-    recommendations: Array<RecommendationsModel>;
+    recommendations: RecommendationsModel;
     user_stack_info: UserStackInfoModel;
 }
 
@@ -20,8 +20,8 @@ export class AuditInformationModel {
 }
 
 export class RecommendationsModel {
-    alternate_components: Array<ComponentInformationModel>;
-    companion_components: Array<ComponentInformationModel>;
+    alternate: Array<ComponentInformationModel>;
+    companion: Array<ComponentInformationModel>;
     usage_outliers: Array<OutlierInformationModel>;
 }
 

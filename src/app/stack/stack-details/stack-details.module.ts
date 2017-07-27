@@ -14,6 +14,7 @@ import { StackDetailsComponent } from './stack-details.component';
 
 /** New UX */
 import {StackLevelModule} from '../stack-level/stack-level.module';
+import {ComponentLevelModule} from '../component-level/component-level.module';
 /** New UX */
 
 @NgModule({
@@ -22,6 +23,7 @@ import {StackLevelModule} from '../stack-level/stack-level.module';
     HttpModule,
     FormsModule,
     StackLevelModule,
+    ComponentLevelModule,
     TabsModule.forRoot()
   ],
   declarations: [ StackDetailsComponent ],

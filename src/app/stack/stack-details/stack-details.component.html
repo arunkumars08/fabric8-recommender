@@ -11,8 +11,7 @@
             (removed)="removeTabHandler(tabz)"
             [customClass]="tabz.customClass">
             <stack-level-information [userStack]="tabz && tabz.content && tabz.content.user_stack_info"></stack-level-information>
-            {{tabz.content}}
-            <!--<component-level-information [component]="userComponentInformation"></component-level-information>-->
+            <component-level-information [component]="componentLevelInformation"></component-level-information>
         </tab>
     </tabset>
     <div *ngIf="!dataLoaded">Nothing to display</div>

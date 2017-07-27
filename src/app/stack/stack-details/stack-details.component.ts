@@ -3,7 +3,7 @@ import {Observable} from 'rxjs/Observable';
 
 import {StackAnalysesService} from '../stack-analyses.service';
 import {getStackReportModel} from '../utils/stack-api-utils';
-import {StackReportModel, ResultInformationModel, UserStackInfoModel, ComponentInformationModel} from '../models/stack-report.model';
+import {StackReportModel, ResultInformationModel, UserStackInfoModel, ComponentInformationModel, RecommendationsModel} from '../models/stack-report.model';
 
 @Component({
     selector: 'stack-details',
@@ -15,8 +15,10 @@ import {StackReportModel, ResultInformationModel, UserStackInfoModel, ComponentI
 export class StackDetailsComponent implements OnInit {
     public error: any = {};
     public userStackInformation: UserStackInfoModel;
+    public componentLevelInformation: any = {};
     public userComponentInformation: Array<ComponentInformationModel> = [];
     public dataLoaded: boolean = false;
+    public recommendationsArray: Array<RecommendationsModel> = [];
     @Input() stack: string;
 
     public tabs: Array<any> = [];
@@ -26,6 +28,12 @@ export class StackDetailsComponent implements OnInit {
 
     public tabSelection(tab: any): void {
         tab['active'] = true;
+        let currentIndex: number = tab['index'];
+        let recommendations: RecommendationsModel = this.recommendationsArray[currentIndex];
+        this.componentLevelInformation = {
+            recommendations: recommendations,
+            dependencies: tab.content.user_stack_info.dependencies
+        };
     }
 
     ngOnInit(): void {
@@ -55,10 +63,12 @@ export class StackDetailsComponent implements OnInit {
                             console.log('HEre');
                             this.tabs.push({
                                 title: 'File',
-                                content: r
+                                content: r,
+                                index: index
                             });
+                            this.recommendationsArray.push(r.recommendations);
                         });
-                        
+
                         this.dataLoaded = true;
                         this.tabSelection(this.tabs[0]);
                     });
