@@ -6,6 +6,7 @@ import { Contexts } from 'ngx-fabric8-wit';
 import { AuthenticationService, AUTH_API_URL, SSO_API_URL } from 'ngx-login-client';
 
 import { AppComponent }  from './app.component';
+import { FormsModule }   from '@angular/forms';
 
 import { witApiUrlProvider } from './shared/wit-api.provider';
 import { ApiLocatorService } from './shared/api-locator.service';
@@ -18,7 +19,7 @@ import { MockAuthenticationService } from './shared/mock-auth.service';
 import { StackDetailsModule } from './stack/stack-details/stack-details.module';
 
 @NgModule({
-  imports:      [ BrowserModule, StackDetailsModule ],
+  imports:      [ BrowserModule, StackDetailsModule, FormsModule ],
   declarations: [ AppComponent ],
   providers: [
     Broadcaster,

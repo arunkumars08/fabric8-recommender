@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnChanges} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 
 import {StackAnalysesService} from '../stack-analyses.service';
@@ -12,7 +12,7 @@ import {StackReportModel, ResultInformationModel, UserStackInfoModel, ComponentI
     styleUrls: ['stack-details.component.scss']
 })
 
-export class StackDetailsComponent implements OnInit {
+export class StackDetailsComponent implements OnChanges {
     public error: any = {};
     public userStackInformation: UserStackInfoModel;
     public componentLevelInformation: any = {};
@@ -36,7 +36,7 @@ export class StackDetailsComponent implements OnInit {
         };
     }
 
-    ngOnInit(): void {
+    ngOnChanges(): void {
         this.init(this.stack);
     }
 
