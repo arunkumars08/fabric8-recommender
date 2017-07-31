@@ -101,6 +101,27 @@
                     font-weight: 100;
                 }
             }
+            .statistics-info {
+                .stat-title {
+                    font-weight: 100;
+                    font-size: 15px;
+                }
+                .usage-outlier {
+                    padding: 0;
+                    li {
+                        display: inline-block;
+                        color: RED;
+                        list-style-type: none;
+                        margin-right: 5px;
+                        &:after {
+                            content: ', ';  
+                        }
+                        &:last-child:after {
+                            content: '';
+                        }
+                    }
+                }
+            }
         }
     }
 }

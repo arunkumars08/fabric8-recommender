@@ -1,5 +1,6 @@
 <div class="stack-report">
-  <div (click)="$event.preventDefault()">
+  <div *ngIf="!error" (click)="$event.preventDefault()">
+    <h1>Stack level details</h1>
     <tabset *ngIf="dataLoaded">
         <tab *ngFor="let tabz of tabs"
             [heading]="tabz.title"
@@ -10,10 +11,11 @@
             [removable]="tabz.removable"
             (removed)="removeTabHandler(tabz)"
             [customClass]="tabz.customClass">
-            <stack-level-information [userStack]="tabz && tabz.content && tabz.content.user_stack_info"></stack-level-information>
+            <stack-level-information [outliers]="stackLevelOutliers" [userStack]="tabz && tabz.content && tabz.content.user_stack_info"></stack-level-information>
             <component-level-information [component]="componentLevelInformation"></component-level-information>
         </tab>
     </tabset>
     <div *ngIf="!dataLoaded">Nothing to display</div>
   </div>
+  <div *ngIf="error">{{error.message}}</div>
 </div>

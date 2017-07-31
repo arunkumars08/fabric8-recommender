@@ -19,6 +19,7 @@ export class StackDetailsComponent implements OnChanges {
     public userComponentInformation: Array<ComponentInformationModel> = [];
     public dataLoaded: boolean = false;
     public recommendationsArray: Array<RecommendationsModel> = [];
+    public stackLevelOutliers: any = {};
     @Input() stack: string;
 
     public tabs: Array<any> = [];
@@ -30,6 +31,9 @@ export class StackDetailsComponent implements OnChanges {
         tab['active'] = true;
         let currentIndex: number = tab['index'];
         let recommendations: RecommendationsModel = this.recommendationsArray[currentIndex];
+        this.stackLevelOutliers = {
+            'usage': recommendations.usage_outliers
+        };
         this.componentLevelInformation = {
             recommendations: recommendations,
             dependencies: tab.content.user_stack_info.dependencies
@@ -44,7 +48,7 @@ export class StackDetailsComponent implements OnChanges {
 
     private handleError(error: any): void {
         this.error = {
-            message: error.message
+            message: error.message || 'In Progress'
         };
     }
 
@@ -74,12 +78,12 @@ export class StackDetailsComponent implements OnChanges {
                     });
                 } else {
                     this.handleError({
-                        message: 'Error API failure'
+                        message: 'Error API In Progress'
                     });
                 }
             },
             error => {
-                this.handleError(error);
+                // this.handleError(error);
             });
     }
 }

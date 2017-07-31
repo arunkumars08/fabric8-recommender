@@ -75,7 +75,13 @@ export class ComponentLevelComponent implements OnChanges {
                     identifier: this.keys['linesOfCode'],
                     isSortable: true
                 }, {
+                    name: 'Github Usage',
+                    identifier: this.keys['avgCycloComplexity']
+                }, {
                     name: 'OSIO Usage',
+                    identifier: this.keys['avgCycloComplexity']
+                }, {
+                    name: 'CVEs',
                     identifier: this.keys['avgCycloComplexity']
                 }, {
                     name: 'Action',
@@ -102,9 +108,11 @@ export class ComponentLevelComponent implements OnChanges {
         output['name'] = input['name'];
         output['current_version'] = input['version'];
         output['latest_version'] = input['latest_version'];
-        output['license'] = input['licenses'].join(', ');
-        output['sentiment_score'] = input['sentiment']['score'];
+        output['license'] = input['licenses'] && input['licenses'].join(', ');
+        output['sentiment_score'] = input['sentiment'] && input['sentiment']['overall_score'];
+        output['github_user_count'] = input['github'] && input['github']['dependent_repos'];
         output['osio_user_count'] = input['osio_user_count'];
+        output['cves'] = input['security'] && input['security'].map((s) => s.CVE).join(', ');
         output['action'] = canCreateWorkItem ? 'Create Work Item' : '';
         return output;
     }

@@ -10,17 +10,25 @@ import {UserStackInfoModel, ComponentInformationModel} from '../models/stack-rep
 
 export class StackLevelComponent {
     @Input() userStack: UserStackInfoModel;
+    @Input() outliers: any;
+
     public licenseInfo: any = {};
     public securityInfo: any = {};
 
     constructor() {}
 
     ngOnChanges(): void {
-        
         if (this.userStack) {
             this.handleLicenseInformation(this.userStack);
             this.handleSecurityInformation(this.userStack);
         }
+        if (this.outliers) {
+            this.handleStatistics(this.outliers);
+        }
+    }
+
+    private handleStatistics(outliers: any): void {
+        
     }
 
     private sortChartColumnData(array: Array<Array<any>>): Array<Array<any>> {
