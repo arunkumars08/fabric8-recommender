@@ -1,6 +1,8 @@
 import { NgModule }      from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
+import {RouterModule} from '@angular/router';
+
 import { Broadcaster } from 'ngx-base';
 import { Contexts } from 'ngx-fabric8-wit';
 import { AuthenticationService, AUTH_API_URL, SSO_API_URL } from 'ngx-login-client';
@@ -19,7 +21,17 @@ import { MockAuthenticationService } from './shared/mock-auth.service';
 import { StackDetailsModule } from './stack/stack-details/stack-details.module';
 
 @NgModule({
-  imports:      [ BrowserModule, StackDetailsModule, FormsModule ],
+  imports: [
+    BrowserModule,
+    StackDetailsModule,
+    FormsModule,
+    RouterModule.forRoot([
+      {
+        path: 'analyze/:id',
+        component: AppComponent
+      }
+    ])
+  ],
   declarations: [ AppComponent ],
   providers: [
     Broadcaster,
