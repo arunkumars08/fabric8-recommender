@@ -1,6 +1,6 @@
 import {Component, Input, OnChanges} from '@angular/core';
 
-import {ComponentInformationModel, RecommendationsModel} from '../models/stack-report.model';
+import {ComponentInformationModel, RecommendationsModel, OutlierInformationModel} from '../models/stack-report.model';
 
 @Component({
     selector: 'component-level-information',
@@ -18,6 +18,7 @@ export class ComponentLevelComponent implements OnChanges {
     private headers: Array<any> = [];
     private keys: any = [];
     private alternate: Array<ComponentInformationModel> = [];
+    private usageOutliers: Array<OutlierInformationModel> = [];
 
     private fieldName: string;
     private fieldValue: string;
@@ -47,6 +48,7 @@ export class ComponentLevelComponent implements OnChanges {
             this.dependencies = this.component['dependencies'];
             this.recommendations = this.component['recommendations'];
             this.alternate = this.recommendations.alternate;
+            this.usageOutliers = this.recommendations['usage_outliers'];
             this.handleDependencies(this.dependencies);
         }
     }
@@ -54,37 +56,52 @@ export class ComponentLevelComponent implements OnChanges {
     private handleDependencies(dependencies: Array<ComponentInformationModel>): void {
         if (dependencies) {
             let length: number = dependencies.length;
-            let dependency: any, eachOne: any;
+            let dependency: any, eachOne: ComponentInformationModel;
             this.headers = [
                 {
                     name: 'Package name',
                     identifier: this.keys['name'],
+                    class: 'large',
                     isSortable: true
                 }, {
                     name: 'Current Version',
                     identifier: this.keys['currentVersion'],
+                    class: 'small',
                     isSortable: true
                 }, {
                     name: 'Latest Version',
+                    class: 'small',
                     identifier: this.keys['latestVersion']
                 }, {
+                    name: 'Security Issue',
+                    class: 'small',
+                    identifier: this.keys['avgCycloComplexity']
+                }, {
                     name: 'License',
+                    class: 'medium',
                     identifier: this.keys['license']
                 }, {
                     name: 'Sentiment Score',
+                    class: 'small',
                     identifier: this.keys['linesOfCode'],
                     isSortable: true
                 }, {
-                    name: 'Github Usage',
-                    identifier: this.keys['avgCycloComplexity']
-                }, {
                     name: 'OSIO Usage',
+                    class: 'small',
                     identifier: this.keys['avgCycloComplexity']
                 }, {
-                    name: 'CVEs',
+                    name: 'Github Usage',
+                    class: 'small',
                     identifier: this.keys['avgCycloComplexity']
+                }, {
+                   name: 'Github Statistics',
+                   class: 'medium'
+                }, {
+                    name: 'Top 10 dependencies',
+                    class: 'medium'
                 }, {
                     name: 'Action',
+                    class: 'medium',
                     identifier: this.keys['noOfFiles'],
                     isSortable: true
                 }
@@ -93,12 +110,19 @@ export class ComponentLevelComponent implements OnChanges {
             this.dependenciesList = [];
             let linesOfCode: any = '';
             let noOfFiles: any = '';
+            let tempLen: number;
             for (let i: number = 0; i < length; ++i) {
                 eachOne = dependencies[i];
                 dependency = this.setParams(eachOne, false);
+                dependency['isUsageOutlier'] = this.isUsageOutlier(dependency['name']);
                 this.dependenciesList.push(dependency);
+                tempLen = this.dependenciesList.length;
                 debugger;
                 this.checkAlternate(eachOne['name'], eachOne['version'], this.dependenciesList);
+
+                if (tempLen !== this.dependenciesList.length) {
+                    dependency['isParent'] = true;
+                }
             }
         }
     }
@@ -112,7 +136,7 @@ export class ComponentLevelComponent implements OnChanges {
         output['sentiment_score'] = input['sentiment'] && input['sentiment']['overall_score'];
         output['github_user_count'] = input['github'] && input['github']['dependent_repos'];
         output['osio_user_count'] = input['osio_user_count'];
-        output['cves'] = input['security'] && input['security'].map((s) => s.CVE).join(', ');
+        output['security_issue'] = input['security'].length > 0;
         output['action'] = canCreateWorkItem ? 'Create Work Item' : '';
         return output;
     }
@@ -126,6 +150,11 @@ export class ComponentLevelComponent implements OnChanges {
                 list.push(obj);
             });
         }
+    }
+
+    private isUsageOutlier(packageName: string): boolean {
+        let result: Array<OutlierInformationModel> = this.usageOutliers.filter(u => u.package_name === packageName);
+        return result && result.length > 0;
     }
 
 }
