@@ -30,7 +30,7 @@
                 </td>
                 <td ellipsis>{{dependency.license}}</td>
                 <td class="text-center">
-                    <sentiment [score]="dependency.sentiment_score">{{dependency.sentiment_score}}</sentiment>
+                    <sentiment *ngIf="dependency.sentiment_score" [score]="dependency.sentiment_score">{{dependency.sentiment_score}}</sentiment>
                 </td>
                 <td class="text-center">{{dependency.osio_user_count}}</td>
                 <td class="text-center">{{dependency.github_user_count}}</td>

@@ -63,7 +63,7 @@ export class StackLevelComponent {
             });
             let cvssValue: number = final.cve.CVSS;
             let indicator: number;
-            let iconClass: string = 'pficon pficon-warning-triangle-o';
+            let iconClass: string = 'fa fa-shield';
             let displayClass: string = 'progress-bar-warning';
 
             if (cvssValue < 0) {
@@ -71,7 +71,7 @@ export class StackLevelComponent {
             }
             if (cvssValue >= 7.0) {
                 indicator = cvssValue;
-                iconClass = 'pficon pficon-warning-triangle-o warning-red-color';
+                iconClass = 'fa-shield';
                 displayClass = 'progress-bar-danger';
             }
             this.securityInfo = {

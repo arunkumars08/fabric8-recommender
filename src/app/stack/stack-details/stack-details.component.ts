@@ -21,6 +21,10 @@ export class StackDetailsComponent implements OnChanges {
     public dataLoaded: boolean = false;
     public recommendationsArray: Array<RecommendationsModel> = [];
     public stackLevelOutliers: any = {};
+
+    public companionLevel: any = {};
+    public componentLevel: any = {};
+
     @Input() stack: string;
 
     public tabs: Array<any> = [];
@@ -46,6 +50,14 @@ export class StackDetailsComponent implements OnChanges {
 
     ngOnChanges(): void {
         this.init(this.stack);
+        this.componentLevel = {
+            header: 'User components with alternate suggestion',
+            subHeader: 'Sub header for user components'
+        };
+        this.companionLevel = {
+            header: 'Additional components suggested by analytics',
+            subHeader: 'Sub header for user components'
+        };
     }
 
     constructor(private stackAnalysisService: StackAnalysesService) {}

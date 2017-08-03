@@ -13,6 +13,9 @@ export class ComponentLevelComponent implements OnChanges {
     @Input() component: any;
     @Input() isCompanion: boolean;
 
+    @Input() header: string;
+    @Input() subHeader: string;
+
     public dependencies: Array<ComponentInformationModel> = [];
     public recommendations: RecommendationsModel;
     private dependenciesList: Array<any> = [];
@@ -87,7 +90,7 @@ export class ComponentLevelComponent implements OnChanges {
                     identifier: this.keys['license']
                 }, {
                     name: 'Sentiment Score',
-                    class: 'small',
+                    class: 'medium',
                     identifier: this.keys['linesOfCode'],
                     isSortable: true
                 }, {

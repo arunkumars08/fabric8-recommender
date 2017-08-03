@@ -1,11 +1,11 @@
 import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 
 import {SentimentComponent} from './sentiment.component';
-import {ChartModule} from '../chart/chart.module';
 
 @NgModule({
     imports: [
-        ChartModule
+        CommonModule
     ],
     declarations: [
         SentimentComponent
