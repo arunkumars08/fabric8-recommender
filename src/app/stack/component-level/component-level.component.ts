@@ -11,6 +11,7 @@ import {ComponentInformationModel, RecommendationsModel, OutlierInformationModel
 export class ComponentLevelComponent implements OnChanges {
 
     @Input() component: any;
+    @Input() isCompanion: boolean;
 
     public dependencies: Array<ComponentInformationModel> = [];
     public recommendations: RecommendationsModel;
@@ -45,10 +46,14 @@ export class ComponentLevelComponent implements OnChanges {
     ngOnChanges(): void {
         if (this.component) {
             console.log(this.component);
-            this.dependencies = this.component['dependencies'];
-            this.recommendations = this.component['recommendations'];
-            this.alternate = this.recommendations.alternate;
-            this.usageOutliers = this.recommendations['usage_outliers'];
+            if (this.isCompanion === undefined) {
+                this.dependencies = this.component['dependencies'];
+                this.recommendations = this.component['recommendations'];
+                this.alternate = this.recommendations.alternate;
+                this.usageOutliers = this.recommendations['usage_outliers'];
+            } else {
+                this.dependencies = this.component['dependencies'];
+            }
             this.handleDependencies(this.dependencies);
         }
     }
@@ -113,15 +118,16 @@ export class ComponentLevelComponent implements OnChanges {
             let tempLen: number;
             for (let i: number = 0; i < length; ++i) {
                 eachOne = dependencies[i];
-                dependency = this.setParams(eachOne, false);
+                dependency = this.setParams(eachOne, this.isCompanion !== undefined);
                 dependency['isUsageOutlier'] = this.isUsageOutlier(dependency['name']);
                 this.dependenciesList.push(dependency);
                 tempLen = this.dependenciesList.length;
-                debugger;
-                this.checkAlternate(eachOne['name'], eachOne['version'], this.dependenciesList);
+                if (this.alternate) {
+                    this.checkAlternate(eachOne['name'], eachOne['version'], this.dependenciesList);
 
-                if (tempLen !== this.dependenciesList.length) {
-                    dependency['isParent'] = true;
+                    if (tempLen !== this.dependenciesList.length) {
+                        dependency['isParent'] = true;
+                    }
                 }
             }
         }

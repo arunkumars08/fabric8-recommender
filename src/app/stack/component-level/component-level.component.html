@@ -1,5 +1,6 @@
 <div class="component-information">
-    <h2>Dependencies</h2>
+    <h2>{{header}}</h2>
+    <p>{{subHeader}}</p>
     <div class="table-responsive">
         <!-- Table HTML -->
         <table class="table table-striped table-bordered table-hover children-break-word" id="dependenciesTable">
@@ -11,24 +12,26 @@
             </th>
             </tr>
         </thead>
-        <tbody>
+        <tbody (hover)="handleHoverState($event)">
             <tr [ngClass]="{'parent-class': dependency.isParent, 'child-class': dependency.isChild}" *ngFor="let dependency of dependenciesList">
                 <td>
                     <span>
-                        <i [ngClass]="{'fa': true, 'fa-reply relation-icon': dependency.isChild, 'fa-database parent-icon': dependency.isParent}" aria-hidden="true" *ngIf="dependency.isChild || dependency.isParent"></i>
+                        <i [ngClass]="{'fa': true, 'fa-reply relation-icon': dependency.isChild, 'fa-database': dependency.isParent || isCompanion === true, 'parent-icon': dependency.isParent, 'companion': isCompanion === true}" aria-hidden="true" *ngIf="dependency.isChild || dependency.isParent || isCompanion === true"></i>
                     </span>
                     <span>
                         <i [ngClass]="{'fa': true, 'fa-database child-icon': dependency.isChild, 'fa-info-circle': dependency.isUsageOutlier}" aria-hidden="true" *ngIf="dependency.isChild || (!dependency.isChild && dependency.isUsageOutlier)"></i>
                     </span>
                     {{dependency.name}}
                 </td>
-                <td class="text-center">{{dependency.current_version}}</td>
+                <td class="text-center">{{!dependency.isChild && !isCompanion ? dependency.current_version : 'NA'}}</td>
                 <td class="text-center">{{dependency.latest_version}}</td>
                 <td class="text-center">
                     <i [ngClass]="{'fa': true, 'insecure fa-ban': dependency.security_issue === true, 'secure fa-check-circle-o': dependency.security_issue === false}" aria-hidden="true"></i>
                 </td>
-                <td class="ellipsis">{{dependency.license}}</td>
-                <td class="text-center">{{dependency.sentiment_score}}</td>
+                <td ellipsis>{{dependency.license}}</td>
+                <td class="text-center">
+                    <sentiment [score]="dependency.sentiment_score">{{dependency.sentiment_score}}</sentiment>
+                </td>
                 <td class="text-center">{{dependency.osio_user_count}}</td>
                 <td class="text-center">{{dependency.github_user_count}}</td>
                 <td></td>

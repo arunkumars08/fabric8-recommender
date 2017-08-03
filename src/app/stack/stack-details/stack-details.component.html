@@ -13,6 +13,7 @@
             [customClass]="tabz.customClass">
             <stack-level-information [outliers]="stackLevelOutliers" [userStack]="tabz && tabz.content && tabz.content.user_stack_info"></stack-level-information>
             <component-level-information [component]="componentLevelInformation"></component-level-information>
+            <component-level-information [isCompanion]="true" [component]="companionLevelRecommendation"></component-level-information>
         </tab>
     </tabset>
     <div *ngIf="!dataLoaded">Nothing to display</div>

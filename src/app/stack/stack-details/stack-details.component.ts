@@ -17,6 +17,7 @@ export class StackDetailsComponent implements OnChanges {
     public userStackInformation: UserStackInfoModel;
     public componentLevelInformation: any = {};
     public userComponentInformation: Array<ComponentInformationModel> = [];
+    public companionLevelRecommendation: any = {};
     public dataLoaded: boolean = false;
     public recommendationsArray: Array<RecommendationsModel> = [];
     public stackLevelOutliers: any = {};
@@ -37,6 +38,9 @@ export class StackDetailsComponent implements OnChanges {
         this.componentLevelInformation = {
             recommendations: recommendations,
             dependencies: tab.content.user_stack_info.dependencies
+        };
+        this.companionLevelRecommendation = {
+            dependencies: recommendations.companion
         };
     }
 

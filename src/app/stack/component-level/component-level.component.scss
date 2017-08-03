@@ -1,6 +1,7 @@
 .component-information {
     table {
         font-size: 13px;
+        table-layout: fixed;
         th {
             text-align: center;
             vertical-align: middle;
@@ -40,7 +41,7 @@
             color: dodgerblue;
         }
         .small-width {
-            width: 3%;
+            width: 5%;
         }
         .medium-width {
             width: 10%;
@@ -62,6 +63,9 @@
         }
         .text-center {
             text-align: center;
+        }
+        .companion {
+            color: #60b57e;
         }
     }
 }
