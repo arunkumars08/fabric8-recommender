@@ -226,7 +226,11 @@ export class ComponentLevelComponent implements OnChanges {
                     name: 'Categories',
                     class: 'medium',
                     order: 10
-                }
+                }, {
+                    name: 'Action',
+                    identifier: this.keys['noOfFiles'],
+                    isSortable: true
+                 }
             ];
 
             if (this.isCompanion) {
@@ -285,6 +289,7 @@ export class ComponentLevelComponent implements OnChanges {
         output['used_by'] = github['used_by'];
         output['categories'] = input['topic_list'];
         output['categories'] = (output['categories'] && output['categories'].length > 0 && output['categories'].join(', ')) || '';
+        output['action'] = canCreateWorkItem ? 'Create Work Item' : '';
         return output;
     }
 
@@ -309,6 +314,15 @@ export class ComponentLevelComponent implements OnChanges {
             let result: Array<OutlierInformationModel> = this.usageOutliers.filter(u => u.package_name === packageName);
             return result && result.length > 0;
         }
+    }
+
+    /*
+     *  handleCreateWorkItemAction - takes recommendation and returns nothing
+     *  Creates work items in specified format to be consumed for POST request 
+     */
+    public handleCreateWIclick(recommender: any, event: Event): void {
+        let workItems = [];
+        //TODO form data to be shared with recommender object
     }
 
 }
