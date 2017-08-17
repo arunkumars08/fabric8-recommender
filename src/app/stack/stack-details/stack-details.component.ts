@@ -52,7 +52,8 @@ export class StackDetailsComponent implements OnChanges {
         };
         this.componentLevelInformation = {
             recommendations: recommendations,
-            dependencies: tab.content.user_stack_info.dependencies
+            dependencies: tab.content.user_stack_info.dependencies,
+            manifestinfo: tab.content.manifest_name
         };
         this.companionLevelRecommendation = {
             dependencies: recommendations.companion

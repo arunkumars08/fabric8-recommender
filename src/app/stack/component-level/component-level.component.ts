@@ -18,6 +18,8 @@ export class ComponentLevelComponent implements OnChanges {
     @Input() header: string;
     @Input() subHeader: string;
 
+    @Input() data;
+
     public dependencies: Array<ComponentInformationModel> = [];
     public recommendations: RecommendationsModel;
     public messages: any;
@@ -309,6 +311,51 @@ export class ComponentLevelComponent implements OnChanges {
             let result: Array<OutlierInformationModel> = this.usageOutliers.filter(u => u.package_name === packageName);
             return result && result.length > 0;
         }
+    }
+
+    /*
+     *  handleCreateWorkItemAction - takes recommendation and returns nothing
+     *  Creates work items in specified format to be consumed for POST request 
+     */
+    public handleCreateWIclick(recommender: any, event: Event): void {
+        let workItems = [];
+        let message: string = '';
+        let codebaseobj: any = { codebase: {
+              'repository': 'Test_Repo',
+              'branch': 'task-1234',
+              'filename': this.component["manifest_name"],
+              'linenumber': 1
+            }
+        }
+        //TODO form data to be shared with recommender object
+        if(recommender && recommender.hasOwnProperty("isChild") && recommender["isChild"]){
+            message = `Stack analytics has identified a potential missing library. It's  
+            recommended that you change ${recommender.name} with version  ${recommender.recommended_version} 
+            to your application as many other Vert.x OpenShift applications have it included`;
+        } else {
+            message = `Stack analytics has identified a potential missing library. It's  
+            recommended that you add ${recommender.name} with version  ${recommender.recommended_version}
+            to your application as many other Vert.x OpenShift applications have it included`;
+        }
+        let description: string = message;
+                    let codebase: any = codebaseobj;
+                    if (this.data && this.data.git) {
+                        codebase['repository'] = this.data.git.uri || '';
+                        codebase['branch'] = this.data.git.ref || 'master';
+                    }
+                    description += '<br />';
+                    description += 'Repository: ' + codebase['repository'];
+                    description += '<br /> Branch: ' + codebase['branch'];
+                    description += '<br /> Filename: ' + codebase['filename'];
+                    description += '<br /> Line Number: ' + codebase['linenumber'];
+                    // let item: any = {
+                    //     title: recommender['workItem']['action'],
+                    //     description: description,
+                    //     codebase: codebase,
+                    //     key: recommender['key']
+                    // };
+
+
     }
 
 }
