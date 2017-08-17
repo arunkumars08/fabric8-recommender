@@ -23,6 +23,7 @@ import {FeedbackModule} from '../feedback/feedback.module';
     CommonModule,
     HttpModule,
     FormsModule,
+    ModalModule,
     StackLevelModule,
     ComponentLevelModule,
     FeedbackModule,

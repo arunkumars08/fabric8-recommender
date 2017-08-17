@@ -1,4 +1,9 @@
 <div class="stack-report">
+  <modal #stackModule title="Report title on Application - {{appName}}, Build #{{buildNumber}}" modalClass="modal-lg modal-fullscreen modal-width-class" (onClose)="handleModalClose();" (onOpen)="init(stack);">
+      <modal-header>
+          {{modalHeader}}
+      </modal-header>
+      <modal-content>
   <div *ngIf="!error" (click)="$event.preventDefault()">
     <tabset *ngIf="dataLoaded">
         <tab *ngFor="let tabz of tabs"
@@ -28,4 +33,6 @@
       </div>
     </div>
   </div>
+  </modal-content>
+</modal>
 </div>

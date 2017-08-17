@@ -1,4 +1,4 @@
-import {Component, Input, OnChanges} from '@angular/core';
+import {Component, Input, OnChanges, ViewChild, ViewEncapsulation} from '@angular/core';
 import {Observable} from 'rxjs/Observable';
 
 import {StackAnalysesService} from '../stack-analyses.service';
@@ -9,12 +9,15 @@ import {StackReportModel, ResultInformationModel, UserStackInfoModel, ComponentI
     selector: 'stack-details',
     templateUrl: './stack-details.component.html',
     providers: [StackAnalysesService],
+    encapsulation: ViewEncapsulation.None,
     styleUrls: ['stack-details.component.scss']
 })
 
 export class StackDetailsComponent implements OnChanges {
     @Input() stack: string;
-    
+
+    @ViewChild('stackModule') modalStackModule: any;
+
     public error: any = {};
     public userStackInformation: UserStackInfoModel;
     public componentLevelInformation: any = {};
@@ -59,7 +62,7 @@ export class StackDetailsComponent implements OnChanges {
     ngOnChanges(): void {
         this.resetFields();
         this.stackId = this.stack && this.stack.split('/')[this.stack.split('/').length - 1];
-        this.init(this.stack);
+        // this.init(this.stack);
         this.initFeedback();
         this.componentLevel = {
             header: 'Analysis of your application stack',
@@ -69,6 +72,7 @@ export class StackDetailsComponent implements OnChanges {
             header: 'Possible companion dependencies',
             subHeader: 'Consider theses additional dependencies'
         };
+        this.modalStackModule.open();
     }
 
     public handleChangeFilter(filterBy: any): void {
@@ -125,7 +129,7 @@ export class StackDetailsComponent implements OnChanges {
                                 content: r,
                                 index: index
                             });
-                            this.recommendationsArray.push(r.recommendation); //Change if the API key changes
+                            this.recommendationsArray.push(r.recommendations); //Change if the API key changes
                         });
 
                         this.dataLoaded = true;
