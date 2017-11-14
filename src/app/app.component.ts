@@ -33,6 +33,9 @@ export class AppComponent implements OnInit {
       debugger;
       let id: string = url.replace('#/analyze/', '');
       let splitParams: Array<string> = id.split('?');
+      if (!this.label) {
+          this.label = splitParams[0];
+      }
       if (splitParams && splitParams.length > 1) {
           this.apiData = decodeURIComponent(splitParams[1].split('api_data=')[1]);
           try {
@@ -72,6 +75,7 @@ export class AppComponent implements OnInit {
                   apiHost += '/';
                   this.gateway['config']['api_url'] = apiHost;
               }
+              debugger;
               this.stackUrl = apiHost + 'api/v1/stack-analyses/' + this.label;
               console.log('=========================');
               console.log(this.gateway);
