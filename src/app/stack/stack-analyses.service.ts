@@ -45,6 +45,7 @@ export class StackAnalysesService {
   }
 
   getStackAnalyses(url: string, params?: any): Observable<any> {
+    console.log('stack service', params);
     let options = new RequestOptions({ headers: this.headers });
     let stackReport: StackReportModel = null;
     if (params && params['access_token']) {

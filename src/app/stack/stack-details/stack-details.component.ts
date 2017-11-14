@@ -214,12 +214,14 @@ export class StackDetailsComponent implements OnChanges {
 
     private init(): void {
         if (this.stackResponse && this.cacheResponse !== this.stackResponse) {
+            console.log('stack details', this.stackResponse);
             this.cacheResponse = this.stackResponse;
             // Change this to some other logic
             setTimeout(() => {
                 this.handleResponse(this.stackResponse);
             }, 1000);
         } else {
+            console.log('stack details', this.stack, this.gatewayConfig);
             if (this.stack && this.stack !== '') {
                 this.stackAnalysisService
                     .getStackAnalyses(this.stack, this.gatewayConfig)
