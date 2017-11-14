@@ -13,9 +13,7 @@ export class AppComponent implements OnInit {
   public label: string;
   public routerLink: string;
   constructor(private route: ActivatedRoute) {
-    debugger;
     this.route.paramMap.subscribe((params) => {
-      debugger;
         this.label = params.get('id');
     });
 
@@ -30,7 +28,6 @@ export class AppComponent implements OnInit {
 
   onAppLoad(): void {
       let url: string = location.hash;
-      debugger;
       let id: string = url.replace('#/analyze/', '');
       let splitParams: Array<string> = id.split('?');
       if (!this.label) {
@@ -75,7 +72,6 @@ export class AppComponent implements OnInit {
                   apiHost += '/';
                   this.gateway['config']['api_url'] = apiHost;
               }
-              debugger;
               this.stackUrl = apiHost + 'api/v1/stack-analyses/' + this.label;
               console.log('=========================');
               console.log(this.gateway);
@@ -89,3 +85,11 @@ export class AppComponent implements OnInit {
       this.onAppLoad();
   }
 }
+
+// format of the url
+// http://localhost:8088/#/analyze/4460cedfec3e49b5b6cf5712ccf7750b?api_data={
+    // "access_token": "<ACCESS_TOKEN>",
+    // "route_config": {
+        // "api_url": "https://recommender.api.openshift.io/"
+    // }
+// }

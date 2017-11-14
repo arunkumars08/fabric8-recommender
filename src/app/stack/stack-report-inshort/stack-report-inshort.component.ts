@@ -39,6 +39,7 @@ export class StackReportInShortComponent implements OnChanges {
         if (this.stackUrl && this.stackUrl !== this.cache) {
             this.cache = this.stackUrl;
             this.dataLoaded = false;
+            console.log('inshort component', this.stackUrl, this.gatewayConfig);
             this.stackAnalysisService
                 .getStackAnalyses(this.stackUrl, this.gatewayConfig)
                 .subscribe((data) => {
