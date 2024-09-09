@@ -4,10 +4,7 @@ metadata:
   name: fabric8-recommender
   annotations:
     github.com/project-slug: arunkumars08/fabric8-recommender
-  labels:
-    test1: test1
-    test2: test2
 spec:
   type: other
   lifecycle: unknown
-  owner: user:development/guest
+  owner: user:default/invinciblejai
